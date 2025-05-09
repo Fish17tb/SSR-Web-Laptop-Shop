@@ -1,14 +1,9 @@
+import { prisma } from "config/prismaClient";
 import getConnection from "../config/database";
 
 const getListUserService = async () => {
-  console.log("get-data success");
-  const connection = await getConnection();
-  try {
-    const [result, fields] = await connection.query("SELECT * FROM users");
-    return result;
-  } catch (err) {
-    return [];
-  }
+  const users = await prisma.user.findMany();
+  return users;
 };
 
 const handleCreateUserService = async (
@@ -16,42 +11,34 @@ const handleCreateUserService = async (
   email: string,
   address: string
 ) => {
-  const connection = await getConnection();
-  try {
-    const [result, fields] = await connection.query(
-      `INSERT INTO Users (name, email, address) VALUES (?, ?, ?)`,
-      [email, name, address]
-    );
-    return result;
-  } catch (err) {
-    return [];
-  }
+  const user = await prisma.user.create({
+    data: {
+      name: name,
+      email: email,
+      address: address,
+    },
+  });
+  return user;
 };
 
 const handleDeleteUserService = async (id: string) => {
-  const connection = await getConnection();
-  try {
-    const [result, fields] = await connection.query(
-      `DELETE FROM Users WHERE id= ?`,
-      [id]
-    );
-    return result;
-  } catch (err) {
-    return [];
-  }
+  const deleteUser = await prisma.user.delete({
+    where: {
+      // plus sign to convert data type
+      id: +id,
+    },
+  });
+  return deleteUser;
 };
 
 const getPageDetailUserService = async (id: string) => {
-  const connection = await getConnection();
-  try {
-    const [result, fields] = await connection.query(
-      `SELECT * FROM users WHERE id = ?`,
-      [id]
-    );
-    return result[0] || null;
-  } catch (err) {
-    return [];
-  }
+  const user = await prisma.user.findUnique({
+    where: {
+      // plus sign to convert data type
+      id: +id,
+    },
+  });
+  return user;
 };
 
 const handleUpdateUserService = async (
@@ -60,18 +47,18 @@ const handleUpdateUserService = async (
   email: string,
   address: string
 ) => {
-  const connection = await getConnection();
-  try {
-    const [result, fields] = await connection.query(
-      `UPDATE users
-         SET name = ?, email= ?, address= ?
-         WHERE id = ?`,
-      [name, email, address, id]
-    );
-    return result;
-  } catch (err) {
-    return [];
-  }
+  const updateUser = await prisma.user.update({
+    where: {
+      // plus sign to convert data type
+      id: +id,
+    },
+    data: {
+      name: name,
+      email: email,
+      address: address,
+    },
+  });
+  return updateUser;
 };
 
 export {
