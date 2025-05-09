@@ -5,16 +5,17 @@
 Dự án **Web Laptop Shop** là một ứng dụng web sử dụng Express kết hợp với TypeScript, Prisma ORM và MySQL nhằm xây dựng hệ thống quản lý cửa hàng bán laptop.
 
 ## Cấu trúc dự án
-
+```
 web-laptop-shop/
-      ├── src/ # Mã nguồn chính (server, routes, controllers, etc.)
-      ├── dist/ # Mã đã biên dịch từ TypeScript
-      ├── node_modules/ # Thư viện phụ thuộc
-      ├── .env # Biến môi trường
-      ├── tsconfig.json # Cấu hình TypeScript
-      ├── package.json # Thông tin và script dự án
-      ├── prisma/ # Schema và migration cho Prisma
-      └── README.md # Hướng dẫn sử dụng
+      ├── src/                    # Mã nguồn chính (server, routes, controllers, etc.)
+      ├── dist/                   # Mã đã biên dịch từ TypeScript
+      ├── node_modules/           # Thư viện phụ thuộc
+      ├── .env                    # Biến môi trường
+      ├── tsconfig.json           # Cấu hình TypeScript
+      ├── package.json            # Thông tin và script dự án
+      ├── prisma/                 # Schema và migration cho Prisma
+      └── README.md               # Hướng dẫn sử dụng
+```
 ## Cài đặt
 
 Yêu cầu cài đặt [Node.js](https://nodejs.org/) phiên bản 20.x và MySQL.
