@@ -7,19 +7,14 @@ Dự án **Web Laptop Shop** là một ứng dụng web sử dụng Express kế
 ## Cấu trúc dự án
 
 web-laptop-shop/
-├── src/ # Mã nguồn chính (server, routes, controllers, etc.)
-├── dist/ # Mã đã biên dịch từ TypeScript
-├── node_modules/ # Thư viện phụ thuộc
-├── .env # Biến môi trường
-├── tsconfig.json # Cấu hình TypeScript
-├── package.json # Thông tin và script dự án
-├── prisma/ # Schema và migration cho Prisma
-└── README.md # Hướng dẫn sử dụng
-
-less
-Copy
-Edit
-
+      ├── src/ # Mã nguồn chính (server, routes, controllers, etc.)
+      ├── dist/ # Mã đã biên dịch từ TypeScript
+      ├── node_modules/ # Thư viện phụ thuộc
+      ├── .env # Biến môi trường
+      ├── tsconfig.json # Cấu hình TypeScript
+      ├── package.json # Thông tin và script dự án
+      ├── prisma/ # Schema và migration cho Prisma
+      └── README.md # Hướng dẫn sử dụng
 ## Cài đặt
 
 Yêu cầu cài đặt [Node.js](https://nodejs.org/) phiên bản 20.x và MySQL.
@@ -31,43 +26,26 @@ Yêu cầu cài đặt [Node.js](https://nodejs.org/) phiên bản 20.x và MySQ
    cd web-laptop-shop
 Cài đặt dependencies:
 
-sh
-Copy
-Edit
 npm install
 Cấu hình biến môi trường:
 
 Tạo file .env và thêm chuỗi kết nối cơ sở dữ liệu:
 
 env
-Copy
-Edit
 DATABASE_URL="mysql://USER:PASSWORD@HOST:PORT/DATABASE"
-Khởi tạo Prisma Client và migration:
 
-sh
-Copy
-Edit
+Khởi tạo Prisma Client và migration:
 npx prisma generate
 npx prisma migrate dev
 Scripts
+
 Chạy môi trường phát triển:
-
-sh
-Copy
-Edit
 npm run dev
+
 Chạy ở chế độ debug:
-
-sh
-Copy
-Edit
 npm run start:debug
-Kiểm tra placeholder test:
 
-sh
-Copy
-Edit
+Kiểm tra placeholder test:
 npm test
 Công nghệ sử dụng
 Node.js 20+
