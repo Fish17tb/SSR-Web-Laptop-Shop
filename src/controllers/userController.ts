@@ -39,7 +39,7 @@ const getPageDetailUser = async (req: Request, res: Response) => {
 
 const handleUpdateUser = async (req: Request, res: Response) => {
   const { id, name, email, address } = req.body;
-  console.log('ck-data', req.body )
+  // console.log("ck-data", req.body);
   await handleUpdateUserService(id, name, email, address);
   return res.redirect("/");
 };
