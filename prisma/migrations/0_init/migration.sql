@@ -1,5 +1,12 @@
 -- CreateTable
-CREATE TABLE `User` (
+CREATE TABLE `post` (
+    `id` INTEGER NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `user` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NULL,
     `email` VARCHAR(255) NULL,
@@ -7,3 +14,4 @@ CREATE TABLE `User` (
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
