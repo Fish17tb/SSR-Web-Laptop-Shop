@@ -2,6 +2,7 @@ import express from "express";
 import "dotenv/config";
 import webRoute from "./routes/web";
 import getConnection from "./config/database";
+import initDataFake from "./mock.data/seed";
 
 const port = process.env.PORT || 8888;
 
@@ -22,7 +23,10 @@ app.use(express.static("public"));
 webRoute(app);
 
 // connect database
-getConnection()
+getConnection();
+
+//seeding data
+initDataFake();
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
