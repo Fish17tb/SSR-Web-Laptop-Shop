@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
-import { getListUserService, handleCreateUserService } from "services/userService";
+import {
+  getAllRoleService,
+  getListUserService,
+  handleCreateUserService,
+} from "services/userService";
 
 const getDashboardPage = async (req: Request, res: Response) => {
   return res.render("admin/dashboard/dashboard.ejs");
@@ -19,8 +23,8 @@ const handleAdminCreateUser = async (req: Request, res: Response) => {
   //  const { name, email, address } = req.body;
   // console.log("check-data", req.body);
   // await handleCreateUserService(name, email, address);
-  return res.render("admin/user/createUser.ejs");
-
+  const roles = await getAllRoleService();
+  return res.render("admin/user/createUser.ejs", { roles: roles });
 };
 
 const getAdminProductPage = async (req: Request, res: Response) => {
