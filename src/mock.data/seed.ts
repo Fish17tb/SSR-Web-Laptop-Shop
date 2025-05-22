@@ -12,7 +12,6 @@ const initDataFake = async () => {
           password: "123456",
           accountType: "user",
           phone: "1234567890",
-          username: "user",
         },
         {
           fullName: "Alex",
@@ -20,7 +19,6 @@ const initDataFake = async () => {
           password: "123456",
           accountType: "user",
           phone: "1234567890",
-          username: "user",
         },
         {
           fullName: "Peter",
@@ -28,7 +26,6 @@ const initDataFake = async () => {
           password: "123456",
           accountType: "user",
           phone: "1234567890",
-          username: "user",
         },
       ],
     });
@@ -36,11 +33,11 @@ const initDataFake = async () => {
     await prisma.role.createMany({
       data: [
         {
-          name: "admin",
+          name: "ADMIN",
           description: "Admin thì full quyền",
         },
         {
-          name: "user",
+          name: "USER",
           description: "User quyền thông thường",
         },
       ],

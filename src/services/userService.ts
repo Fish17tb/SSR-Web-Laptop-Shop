@@ -7,19 +7,19 @@ const getListUserService = async () => {
 };
 
 const handleCreateUserService = async (
-  name: string,
+  fullName: string,
   email: string,
   address: string
 ) => {
   const user = await prisma.user.create({
     data: {
-      fullName: name,
+      fullName: fullName,
       email: email,
       address: address,
       password: "123456",
       accountType: "user",
       phone: "1234567890",
-      username: "user",
+      avatar: "",
     },
   });
   return user;

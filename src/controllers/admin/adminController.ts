@@ -8,36 +8,39 @@ import {
 const getDashboardPage = async (req: Request, res: Response) => {
   return res.render("admin/dashboard/dashboard.ejs");
 };
-const getAdminUserPage = async (req: Request, res: Response) => {
+
+const getPageManageUsers = async (req: Request, res: Response) => {
   const listuser = await getListUserService();
   return res.render("admin/user/manageUser.ejs", {
     listuser: listuser,
   });
 };
 
-const getAdminCreateUser = async (req: Request, res: Response) => {
-  return res.render("admin/user/createUser.ejs");
+const getPageCreateUser = async (req: Request, res: Response) => {
+  const roles = await getAllRoleService();  
+  return res.render("admin/user/createUser.ejs", { roles: roles });
 };
 
-const handleAdminCreateUser = async (req: Request, res: Response) => {
-  //  const { name, email, address } = req.body;
-  // console.log("check-data", req.body);
+const handleCreateUser = async (req: Request, res: Response) => {
+  const { fullName, email, phone, role, address } = req.body;
+
+  // console.log("check-data", fullName, email, phone, role, address);
   // await handleCreateUserService(name, email, address);
-  const roles = await getAllRoleService();
-  return res.render("admin/user/createUser.ejs", { roles: roles });
+  return res.render("admin/user/manageUser.ejs");
 };
 
 const getAdminProductPage = async (req: Request, res: Response) => {
   return res.render("admin/product/manageProduct.ejs");
 };
+
 const getAdminOrderPage = async (req: Request, res: Response) => {
   return res.render("admin/order/mangeOrder.ejs");
 };
 export {
   getDashboardPage,
-  getAdminUserPage,
+  getPageManageUsers,
   getAdminProductPage,
   getAdminOrderPage,
-  getAdminCreateUser,
-  handleAdminCreateUser,
+  getPageCreateUser,
+  handleCreateUser,
 };
