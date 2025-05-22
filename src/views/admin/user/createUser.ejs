@@ -9,6 +9,17 @@
 
   <link href="/admin/css/styles.css" rel="stylesheet" />
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(() => {
+      const avatarFile = $("#avatarFile");
+      avatarFile.change(function (e) {
+        const imgURL = URL.createObjectURL(e.target.files[0]);
+        $("#avatarPreview").attr("src", imgURL);
+        $("#avatarPreview").css({ "display": "block" });
+      });
+    });
+  </script>
 </head>
 
 <body class="sb-nav-fixed">
@@ -28,14 +39,15 @@
                 </li>
               </ol>
               <div>
-                <form action="/admin/user/handle-create-user" method="post">
+                <form action="/admin/handle-create-user" method="post">
                   <div style="width: 600px; margin: auto">
+
                     <h3 class="mb-3" style="margin-top: 20px">
                       Create a new user
                     </h3>
                     <div class="mb-3">
                       <label class="form-label">Full Name:</label>
-                      <input class="form-control" name="name" placeholder="your name" />
+                      <input class="form-control" name="fullName" placeholder="your name" />
                     </div>
                     <div class="mb-3">
                       <label class="form-label">Email:</label>
@@ -43,24 +55,27 @@
                       <div class="row mt-3">
                         <div class="mb-3 col-6">
                           <label class="form-label">Phone:</label>
-                          <input type="number" class="form-control" name="phone" placeholder="your phone" />
+                          <input class="form-control" name="phone" placeholder="your phone" />
                         </div>
                         <div class="mb-3 col-6">
                           <label class="form-label">Role:</label>
-                          <select class="form-select">
-                            <option selected>Choose one</option>
+                          <select name="role" class="form-select">
+                            <option selected disabled>Choose a role</option>
                             <% roles.forEach((role,index)=> { %>
-                              <option value="<%-role.id %>">
+                              <option value="<%- role.id %>">
                                 <%- role.name %>
                               </option>
                               <%})%>
                           </select>
+
                         </div>
                       </div>
                       <div class="mb-3">
                         <label for="formFile" class="form-label">Avatar</label>
-                        <input class="form-control" type="file" id="formFile" />
+                        <input class="avatar form-control" type="file" id="avatarFile" accept=".png, .jpg, .jpeg">
                       </div>
+                      <img style="max-height: 350px; display: none;" alt="avatar preview" id="avatarPreview" />
+
                       <div class="mb-3">
                         <label class="form-label">Address</label>
                         <textarea class="form-control" rows="3" name="address"></textarea>

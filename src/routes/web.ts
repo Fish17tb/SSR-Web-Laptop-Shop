@@ -1,19 +1,19 @@
 import express, { Express } from "express";
 import {
-  getPageCreateUser,
+  // getPageCreateUser,
   getHomePage,
-  handleCreateUser,
+  // handleCreateUser,
   handleDeleteUser,
   getPageDetailUser,
   handleUpdateUser,
 } from "controllers/userController";
 import {
-  getAdminCreateUser,
+  getPageCreateUser,
   getAdminOrderPage,
   getAdminProductPage,
-  getAdminUserPage,
   getDashboardPage,
-  handleAdminCreateUser,
+  getPageManageUsers,
+  handleCreateUser,
 } from "controllers/admin/adminController";
 
 const router = express.Router();
@@ -29,9 +29,9 @@ const webRoute = (app: Express) => {
 
   // admin routes
   router.get("/admin", getDashboardPage);
-  router.get("/admin/user", getAdminUserPage);
-  router.get("/admin/user/create-user", getAdminCreateUser);
-  router.get("/admin/user/handle-create-user", handleAdminCreateUser);
+  router.get("/admin/user", getPageManageUsers);
+  router.get("/admin/create-user", getPageCreateUser);
+  router.post("/admin/handle-create-user", handleCreateUser);
   router.get("/admin/product", getAdminProductPage);
   router.get("/admin/order", getAdminOrderPage);
 
