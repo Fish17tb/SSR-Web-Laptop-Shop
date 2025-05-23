@@ -1,10 +1,18 @@
 import { prisma } from "config/prismaClient";
 import getConnection from "../config/database";
 import { ACCOUNT_TYPE } from "config/constant";
+import bcrypt from "bcrypt";
+
+const saltRounds = 10; // Password strength
 
 const getListUserService = async () => {
   const users = await prisma.user.findMany();
   return users;
+};
+
+// hash password for seed data
+const hashPassword = async (password: string) => {
+  return await bcrypt.hash(password, saltRounds);
 };
 
 const handleCreateUserService = async (
@@ -14,12 +22,13 @@ const handleCreateUserService = async (
   phone: string,
   avatar: string
 ) => {
+  const defaultPassword = await hashPassword("123456");
   const user = await prisma.user.create({
     data: {
       fullName: fullName,
       email: email,
       address: address,
-      password: "123456",
+      password: defaultPassword,
       accountType: ACCOUNT_TYPE.SYSTEM,
       phone: phone,
       avatar: avatar,
@@ -69,14 +78,15 @@ const handleUpdateUserService = async (
 };
 
 const getAllRoleService = async () => {
-const roles = await prisma.role.findMany();
+  const roles = await prisma.role.findMany();
   return roles;
-}
+};
 export {
   handleCreateUserService,
   getListUserService,
   handleDeleteUserService,
   getPageDetailUserService,
   handleUpdateUserService,
-  getAllRoleService
+  getAllRoleService,
+  hashPassword,
 };
