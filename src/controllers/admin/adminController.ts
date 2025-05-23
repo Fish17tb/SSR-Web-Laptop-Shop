@@ -22,11 +22,15 @@ const getPageCreateUser = async (req: Request, res: Response) => {
 };
 
 const handleCreateUser = async (req: Request, res: Response) => {
-  const { fullName, email, address, role, phone } = req.body;
+  const { fullName, email, address, role, phone, } = req.body;
+
+  // get avatar (library multer)
+  const file = req.file; // file: null <=> User doesn't transmit images
+  const avatar = file?.filename ?? ""
 
   // console.log("check-data", fullName, email, phone, role, address);
-  // await handleCreateUserService(name, email, address);
-  return res.render("admin/user/manageUser.ejs");
+  await handleCreateUserService(fullName, email, address, phone, avatar);
+  return res.redirect("/admin/user");
 };
 
 const getAdminProductPage = async (req: Request, res: Response) => {
