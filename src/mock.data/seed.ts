@@ -1,4 +1,6 @@
 import { prisma } from "config/prismaClient";
+import { hashPassword } from "services/userService";
+import { ACCOUNT_TYPE } from "config/constant";
 
 const initDataFake = async () => {
   const userCount = await prisma.user.count();
@@ -7,25 +9,18 @@ const initDataFake = async () => {
     await prisma.user.createMany({
       data: [
         {
-          fullName: "Bob",
-          email: "bob@prisma.io",
-          password: "123456",
-          accountType: "user",
-          phone: "1234567890",
+          fullName: "Ngô Văn Quyết",
+          email: "ngoquyet245@gmail.com",
+          password: await hashPassword("123456"),
+          accountType: ACCOUNT_TYPE.SYSTEM,
+          phone: "0957237425",
         },
         {
-          fullName: "Alex",
-          email: "alex@prisma.io",
-          password: "123456",
-          accountType: "user",
-          phone: "1234567890",
-        },
-        {
-          fullName: "Peter",
-          email: "peter@prisma.io",
-          password: "123456",
-          accountType: "user",
-          phone: "1234567890",
+          fullName: "Trần Bình Trọng",
+          email: "binhtrong123@gmail.com",
+          password: await hashPassword("123456"),
+          accountType: ACCOUNT_TYPE.SYSTEM,
+          phone: "0957328434",
         },
       ],
     });
