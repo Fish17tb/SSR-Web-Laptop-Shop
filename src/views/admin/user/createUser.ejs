@@ -39,7 +39,7 @@
                 </li>
               </ol>
               <div>
-                <form action="/admin/handle-create-user" method="post">
+                <form action="/admin/handle-create-user" method="post" enctype="multipart/form-data">
                   <div style="width: 600px; margin: auto">
 
                     <h3 class="mb-3" style="margin-top: 20px">
@@ -72,7 +72,7 @@
                       </div>
                       <div class="mb-3">
                         <label for="formFile" class="form-label">Avatar</label>
-                        <input class="avatar form-control" type="file" id="avatarFile" accept=".png, .jpg, .jpeg">
+                        <input name="avatar" class="avatar form-control" type="file" id="avatarFile" accept=".png, .jpg, .jpeg">
                       </div>
                       <img style="max-height: 350px; display: none;" alt="avatar preview" id="avatarPreview" />
 

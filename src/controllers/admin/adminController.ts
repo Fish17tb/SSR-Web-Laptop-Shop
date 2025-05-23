@@ -22,7 +22,7 @@ const getPageCreateUser = async (req: Request, res: Response) => {
 };
 
 const handleCreateUser = async (req: Request, res: Response) => {
-  const { fullName, email, phone, role, address } = req.body;
+  const { fullName, email, address, role, phone } = req.body;
 
   // console.log("check-data", fullName, email, phone, role, address);
   // await handleCreateUserService(name, email, address);
