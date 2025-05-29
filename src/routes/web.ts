@@ -1,12 +1,12 @@
 import express, { Express } from "express";
-import {
-  // getPageCreateUser,
-  getHomePage,
-  // handleCreateUser,
-  handleDeleteUser,
-  getPageDetailUser,
-  handleUpdateUser,
-} from "controllers/userController";
+// import {
+//   // getPageCreateUser,
+//   getHomePage,
+//   // handleCreateUser,
+//   handleDeleteUser,
+//   getPageDetailUser,
+//   handleUpdateUser,
+// } from "controllers/userController";
 import {
   getPageCreateUser,
   getAdminOrderPage,
@@ -14,6 +14,9 @@ import {
   getDashboardPage,
   getPageManageUsers,
   handleCreateUser,
+  handleDeleteUser,
+  getPageDetailUser,
+  handleUpdateUser,
 } from "controllers/admin/adminController";
 import uploadSingleFile from "src/middleware/fileUpload";
 
@@ -37,6 +40,10 @@ const webRoute = (app: Express) => {
     uploadSingleFile("avatar"),
     handleCreateUser
   );
+  router.post("/admin/handle-delete-user/:id", handleDeleteUser);
+  router.get("/admin/handle-view-user/:id", getPageDetailUser);
+  router.post("/admin/handle-update-user/:id", handleUpdateUser);
+
   // router.post(
   //   "/admin/handle-create-user",
   //   upload.single("avatar"),
