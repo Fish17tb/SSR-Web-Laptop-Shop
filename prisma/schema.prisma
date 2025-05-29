@@ -17,6 +17,9 @@ model User {
   accountType String  @db.VarChar(255)
   avatar      String? @db.VarChar(255)
 
+  role   Role @relation(fields: [roleId], references: [id])
+  roleId Int // FK
+
   @@map("users")
 }
 
@@ -24,6 +27,8 @@ model Role {
   id          Int     @id @default(autoincrement())
   name        String  @db.VarChar(255)
   description String? @db.VarChar(255)
+
+  users User[]
 
   @@map("roles")
 }

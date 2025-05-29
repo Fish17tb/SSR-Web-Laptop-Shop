@@ -20,7 +20,8 @@ const handleCreateUserService = async (
   email: string,
   address: string,
   phone: string,
-  avatar: string
+  avatar: string,
+  role: number
 ) => {
   const defaultPassword = await hashPassword("123456");
   const user = await prisma.user.create({
@@ -31,7 +32,8 @@ const handleCreateUserService = async (
       password: defaultPassword,
       accountType: ACCOUNT_TYPE.SYSTEM,
       phone: phone,
-      avatar: avatar,
+      avatar: avatar, 
+      roleId: +role
     },
   });
   return user;
