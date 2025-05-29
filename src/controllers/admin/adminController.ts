@@ -29,7 +29,7 @@ const handleCreateUser = async (req: Request, res: Response) => {
   const avatar = file?.filename ?? ""
 
   // console.log("check-data", fullName, email, phone, role, address);
-  await handleCreateUserService(fullName, email, address, phone, avatar);
+  await handleCreateUserService(fullName, email, address, phone, avatar, role);
   return res.redirect("/admin/user");
 };
 
