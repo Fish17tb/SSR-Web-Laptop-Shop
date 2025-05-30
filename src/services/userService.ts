@@ -32,8 +32,8 @@ const handleCreateUserService = async (
       password: defaultPassword,
       accountType: ACCOUNT_TYPE.SYSTEM,
       phone: phone,
-      avatar: avatar, 
-      roleId: +role
+      avatar: avatar,
+      roleId: +role,
     },
   });
   return user;
@@ -61,9 +61,11 @@ const getPageDetailUserService = async (id: string) => {
 
 const handleUpdateUserService = async (
   id: string,
-  name: string,
-  email: string,
-  address: string
+  fullName: string,
+  address: string,
+  phone: string,
+  avatar: string,
+  role: number
 ) => {
   const updateUser = await prisma.user.update({
     where: {
@@ -71,9 +73,11 @@ const handleUpdateUserService = async (
       id: +id,
     },
     data: {
-      fullName: name,
-      email: email,
+      fullName: fullName,
       address: address,
+      roleId: +role,
+      phone: phone,
+      ...(avatar !== undefined && { avatar: avatar }),
     },
   });
   return updateUser;
@@ -83,6 +87,7 @@ const getAllRoleService = async () => {
   const roles = await prisma.role.findMany();
   return roles;
 };
+
 export {
   handleCreateUserService,
   getListUserService,

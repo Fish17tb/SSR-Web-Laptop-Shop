@@ -60,11 +60,16 @@ const getPageDetailUser = async (req: Request, res: Response) => {
 };
 
 const handleUpdateUser = async (req: Request, res: Response) => {
-  const { id, name, email, address } = req.body;
-  
-  await handleUpdateUserService(id, name, email, address);
+  const { id, fullName, address, phone, role } = req.body;
+
+  // get avatar (library multer)
+  const file = req.file; // file: null <=> User doesn't transmit images
+  const avatar = file?.filename ?? undefined;
+
+  await handleUpdateUserService(id, fullName, address, phone, avatar, role);
   return res.redirect("/admin/user");
 };
+
 export {
   getDashboardPage,
   getPageManageUsers,
