@@ -42,7 +42,11 @@ const webRoute = (app: Express) => {
   );
   router.post("/admin/handle-delete-user/:id", handleDeleteUser);
   router.get("/admin/handle-view-user/:id", getPageDetailUser);
-  router.post("/admin/handle-update-user/:id", handleUpdateUser);
+  router.post(
+    "/admin/handle-update-user",
+    uploadSingleFile("avatar"),
+    handleUpdateUser
+  );
 
   // router.post(
   //   "/admin/handle-create-user",
