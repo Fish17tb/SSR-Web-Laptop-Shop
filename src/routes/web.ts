@@ -19,6 +19,8 @@ import {
   handleUpdateUser,
 } from "controllers/admin/adminController";
 import uploadSingleFile from "src/middleware/fileUpload";
+import { getHomePage } from "controllers/client/homeController";
+import { getPageDetailProduct } from "controllers/client/productController";
 
 const router = express.Router();
 
@@ -57,6 +59,10 @@ const webRoute = (app: Express) => {
   // );
   router.get("/admin/product", getAdminProductPage);
   router.get("/admin/order", getAdminOrderPage);
+
+  // client
+  router.get("/", getHomePage);
+  router.get("/handle-view-product/", getPageDetailProduct);
 
   app.use("/", router);
 };
