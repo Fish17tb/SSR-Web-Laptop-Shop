@@ -21,6 +21,11 @@ import {
 import uploadSingleFile from "src/middleware/fileUpload";
 import { getHomePage } from "controllers/client/homeController";
 import { getPageDetailProduct } from "controllers/client/productController";
+import {
+  getPageCreateProduct,
+  getPageManageProducts,
+  handleCreateProduct,
+} from "controllers/admin/productController";
 
 const router = express.Router();
 
@@ -50,6 +55,14 @@ const webRoute = (app: Express) => {
     handleUpdateUser
   );
 
+  router.get("/admin/product", getPageManageProducts);
+  router.get("/admin/create-product", getPageCreateProduct);
+  router.post(
+    "/admin/handle-create-product",
+    uploadSingleFile("image", "images/product"),
+    handleCreateProduct
+  );
+
   // router.post(
   //   "/admin/handle-create-user",
   //   upload.single("avatar"),
@@ -57,7 +70,6 @@ const webRoute = (app: Express) => {
   //     res.send("File uploaded successfully");
   //   }
   // );
-  router.get("/admin/product", getAdminProductPage);
   router.get("/admin/order", getAdminOrderPage);
 
   // client
