@@ -41,79 +41,84 @@
                             <div>
                                 <form action="/admin/handle-create-product" method="post" enctype="multipart/form-data">
                                     <div style="width: 600px; margin: auto">
+                                        <% errors.forEach(function(eror) { %>
+                                            <div class="alert alert-danger mb-3">
+                                                <%=eror%>
+                                            </div>
+                                            <% }) %>
+                                                <h3 class="mb-3" style="margin-top: 20px">
+                                                    Create a new product
+                                                </h3>
+                                                <div class="row">
+                                                    <div class="mb-3 col-6">
+                                                        <label class="form-label">Name:</label>
+                                                        <input class="form-control" name="name" value="<%= oldData.name %>" />
+                                                    </div>
+                                                    <div class="mb-3 col-6">
+                                                        <label class="form-label">Price:</label>
+                                                        <input class="form-control" name="price" value="<%= oldData.price %>" />
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Detail Description:</label>
+                                                    <textarea class="form-control" rows="3"
+                                                        name="detailDesc"><%= oldData.detailDesc %></textarea>
 
-                                        <h3 class="mb-3" style="margin-top: 20px">
-                                            Create a new product
-                                        </h3>
-                                        <div class="row">
-                                            <div class="mb-3 col-6">
-                                                <label class="form-label">Name:</label>
-                                                <input class="form-control" name="name" />
-                                            </div>
-                                            <div class="mb-3 col-6">
-                                                <label class="form-label">Price:</label>
-                                                <input class="form-control" name="price" />
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Detail Description:</label>
-                                            <textarea class="form-control" rows="3" name="detailDesc"></textarea>
+                                                </div>
 
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="mb-3 col-6">
-                                                <label class="form-label">Short Description:</label>
-                                                <input class="form-control" name="shortDesc" />
-                                            </div>
-                                            <div class="mb-3 col-6">
-                                                <label class="form-label">Quantity:</label>
-                                                <input class="form-control" name="quantity" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="mb-3 col-6">
-                                                <label class="form-label">Factory</label>
-                                                <select name="factory" class="form-select">
-                                                    <option value="APPLE">Apple (MacBook)</option>
-                                                    <option value="ASUS">Asus</option>
-                                                    <option value="LENOVO">Lenovo</option>
-                                                    <option value="DELL">Dell</option>
-                                                    <option value="LG">LG</option>
-                                                    <option value="ACER">Acer</option>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3 col-6">
-                                                <label class="form-label">Target</label>
-                                                <select name="target" class="form-select">
-                                                    <option value="GAMING">Gaming</option>
-                                                    <option value="SINHVIEN-VANPHONG">Sinh viên - Văn phòng
-                                                    </option>
-                                                    <option value="THIET-KE-DO-HOA">Thiết kế đồ họa</option>
-                                                    <option value="MONG-NHE">Mỏng nhẹ</option>
-                                                    <option value="DOANH-NHAN">Doanh nhân</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                                <div class="row">
+                                                    <div class="mb-3 col-6">
+                                                        <label class="form-label">Short Description:</label>
+                                                        <input class="form-control" name="shortDesc" value="<%= oldData.shortDesc %>" />
+                                                    </div>
+                                                    <div class="mb-3 col-6">
+                                                        <label class="form-label">Quantity:</label>
+                                                        <input class="form-control" name="quantity" value="<%= oldData.quantity %>" />
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="mb-3 col-6">
+                                                        <label class="form-label">Factory</label>
+                                                        <select name="factory" class="form-select">
+                                                            <option value="APPLE">Apple (MacBook)</option>
+                                                            <option value="ASUS">Asus</option>
+                                                            <option value="LENOVO">Lenovo</option>
+                                                            <option value="DELL">Dell</option>
+                                                            <option value="LG">LG</option>
+                                                            <option value="ACER">Acer</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3 col-6">
+                                                        <label class="form-label">Target</label>
+                                                        <select name="target" class="form-select">
+                                                            <option value="GAMING">Gaming</option>
+                                                            <option value="SINHVIEN-VANPHONG">Sinh viên - Văn phòng
+                                                            </option>
+                                                            <option value="THIET-KE-DO-HOA">Thiết kế đồ họa</option>
+                                                            <option value="MONG-NHE">Mỏng nhẹ</option>
+                                                            <option value="DOANH-NHAN">Doanh nhân</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
 
 
-                                        <div class="mb-3">
-                                            <label for="formFile" class="form-label">Image:</label>
-                                            <input name="image" class="avatar form-control" type="file" id="avatarFile"
-                                                accept=".png, .jpg, .jpeg">
-                                        </div>
-                                        <img style="max-height: 350px; display: none;" alt="avatar preview"
-                                            id="avatarPreview" />
-                                        <div class="mt-3 float-end">
-                                            <a href="/">
-                                                <button class="btn btn-secondary" type="submit">
-                                                    Back
-                                                </button>
-                                            </a>
-                                            <button class="btn btn-primary" type="submit">
-                                                Create
-                                            </button>
-                                        </div>
+                                                <div class="mb-3">
+                                                    <label for="formFile" class="form-label">Image:</label>
+                                                    <input name="image" class="avatar form-control" type="file"
+                                                        id="avatarFile" accept=".png, .jpg, .jpeg">
+                                                </div>
+                                                <img style="max-height: 350px; display: none;" alt="avatar preview"
+                                                    id="avatarPreview" />
+                                                <div class="mt-3 float-end">
+                                                    <a href="/">
+                                                        <button class="btn btn-secondary" type="submit">
+                                                            Back
+                                                        </button>
+                                                    </a>
+                                                    <button class="btn btn-primary" type="submit">
+                                                        Create
+                                                    </button>
+                                                </div>
                                     </div>
 
                                 </form>

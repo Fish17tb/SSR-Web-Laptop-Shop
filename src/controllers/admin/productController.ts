@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { ProductSchema, TProductSchema } from "src/validation/product.schema";
 // import { handleCreateProductSv } from "services/admin/productService";
 
 const getPageManageProducts = async (req: Request, res: Response) => {
@@ -6,27 +7,49 @@ const getPageManageProducts = async (req: Request, res: Response) => {
 };
 
 const getPageCreateProduct = async (req: Request, res: Response) => {
-  return res.render("admin/product/createProduct.ejs");
+  const errors = [];
+  const oldData = {
+    name: "",
+    price: "",
+    detailDesc: "",
+    shortDesc: "",
+    quantity: "",
+    factory: "",
+    target: "",
+  };
+
+  return res.render("admin/product/createProduct.ejs", {
+    errors: errors,
+    oldData: oldData,
+  });
 };
 
 const handleCreateProduct = async (req: Request, res: Response) => {
-  const { name } = req.body;
+  const { name, price, detailDesc, shortDesc, factory, quantity, target } =
+    req.body as TProductSchema;
 
-  // // get avatar (library multer)
-  // const file = req.file; // file: null <=> User doesn't transmit images
-  // const image = file?.filename ?? "";
+  const validate = ProductSchema.safeParse(req.body);
 
-  // await handleCreateProductSv(
-  //   name,
-  //   price,
-  //   image,
-  //   detailDesc,
-  //   shortDesc,
-  //   quantity,
-  //   factory,
-  //   target,
-  //   sold: +""
-  // );
+  if (!validate.success) {
+    const errorsZod = validate.error.issues;
+    const errors = errorsZod?.map(
+      (item) => `${item.message} (${item.path[0]})`
+    );
+    const oldData = {
+      name,
+      price,
+      detailDesc,
+      shortDesc,
+      factory,
+      quantity,
+      target,
+    };
+    return res.render("admin/product/createProduct.ejs", {
+      errors: errors,
+      oldData: oldData,
+    });
+  }
+
   return res.redirect("/admin/product");
 };
 
