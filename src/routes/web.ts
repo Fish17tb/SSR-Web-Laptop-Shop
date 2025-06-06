@@ -23,8 +23,11 @@ import { getHomePage } from "controllers/client/homeController";
 import { getPageDetailProduct } from "controllers/client/productController";
 import {
   getPageCreateProduct,
+  getPageDetailProducts,
   getPageManageProducts,
   handleCreateProduct,
+  handleDeleteProduct,
+  handleUpdateProduct,
 } from "controllers/admin/productController";
 
 const router = express.Router();
@@ -40,6 +43,8 @@ const webRoute = (app: Express) => {
 
   // admin routes
   router.get("/admin", getDashboardPage);
+
+  // User
   router.get("/admin/user", getPageManageUsers);
   router.get("/admin/create-user", getPageCreateUser);
   router.post(
@@ -55,12 +60,20 @@ const webRoute = (app: Express) => {
     handleUpdateUser
   );
 
+  // Product
   router.get("/admin/product", getPageManageProducts);
   router.get("/admin/create-product", getPageCreateProduct);
   router.post(
     "/admin/handle-create-product",
     uploadSingleFile("image", "images/product"),
     handleCreateProduct
+  );
+  router.post("/admin/handle-delete-product/:id", handleDeleteProduct);
+  router.get("/admin/handle-view-product/:id", getPageDetailProducts);
+  router.post(
+    "/admin/handle-update-product",
+    uploadSingleFile("image", "images/product"),
+    handleUpdateProduct
   );
 
   // router.post(
@@ -72,7 +85,7 @@ const webRoute = (app: Express) => {
   // );
   router.get("/admin/order", getAdminOrderPage);
 
-  // client
+  // client routes
   router.get("/", getHomePage);
   router.get("/handle-view-product/", getPageDetailProduct);
 
