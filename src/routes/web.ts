@@ -17,7 +17,7 @@ import {
   handleDeleteUser,
   getPageDetailUser,
   handleUpdateUser,
-} from "controllers/admin/adminController";
+} from "controllers/admin/userController";
 import uploadSingleFile from "src/middleware/fileUpload";
 import { getHomePage } from "controllers/client/homeController";
 import { getPageDetailProduct } from "controllers/client/productController";
@@ -41,10 +41,10 @@ const webRoute = (app: Express) => {
   //   router.get("/handle-view-user/:id", getPageDetailUser);
   //   router.post("/handle-update-user/:id", handleUpdateUser);
 
-  // admin routes
+  // Admin-Routes
   router.get("/admin", getDashboardPage);
 
-  // User
+  // Admin-User
   router.get("/admin/user", getPageManageUsers);
   router.get("/admin/create-user", getPageCreateUser);
   router.post(
@@ -60,7 +60,7 @@ const webRoute = (app: Express) => {
     handleUpdateUser
   );
 
-  // Product
+  // Admin-Product
   router.get("/admin/product", getPageManageProducts);
   router.get("/admin/create-product", getPageCreateProduct);
   router.post(
@@ -85,9 +85,9 @@ const webRoute = (app: Express) => {
   // );
   router.get("/admin/order", getAdminOrderPage);
 
-  // client routes
+  // Client-Routes
   router.get("/", getHomePage);
-  router.get("/handle-view-product/", getPageDetailProduct);
+  router.get("/detail-product/:id", getPageDetailProduct);
 
   app.use("/", router);
 };
