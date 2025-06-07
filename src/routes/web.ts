@@ -29,6 +29,7 @@ import {
   handleDeleteProduct,
   handleUpdateProduct,
 } from "controllers/admin/productController";
+import { getLoignPage, getRegisterPage, handleRegister } from "controllers/client/authController";
 
 const router = express.Router();
 
@@ -86,6 +87,9 @@ const webRoute = (app: Express) => {
   router.get("/admin/order", getAdminOrderPage);
 
   // Client-Routes
+  router.get("/login", getLoignPage)
+  router.get("/register", getRegisterPage)
+  router.post("/handle-register", handleRegister)
   router.get("/", getHomePage);
   router.get("/detail-product/:id", getPageDetailProduct);
 
