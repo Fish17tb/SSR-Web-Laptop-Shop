@@ -6,7 +6,7 @@ import {
   handleCreateUserService,
   handleDeleteUserService,
   handleUpdateUserService,
-} from "services/userService";
+} from "services/admin/userService";
 
 const getDashboardPage = async (req: Request, res: Response) => {
   return res.render("admin/dashboard/dashboard.ejs");

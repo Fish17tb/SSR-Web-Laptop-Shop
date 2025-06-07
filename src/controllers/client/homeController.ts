@@ -1,7 +1,11 @@
 import { Request, Response } from "express";
+import { getAllProduct } from "services/client/homeService";
 
 const getHomePage = async (req: Request, res: Response) => {
-  return res.render("client/home/home.ejs");
+  const products = await getAllProduct();
+  return res.render("client/home/home.ejs", {
+    products,
+  });
 };
 
 export { getHomePage };

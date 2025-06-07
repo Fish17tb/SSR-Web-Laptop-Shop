@@ -1,5 +1,5 @@
 import { prisma } from "config/prismaClient";
-import getConnection from "../config/database";
+import getConnection from "../../config/database";
 import { ACCOUNT_TYPE } from "config/constant";
 import bcrypt from "bcrypt";
 
