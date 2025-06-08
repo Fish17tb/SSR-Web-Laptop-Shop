@@ -6,6 +6,7 @@ import {
 } from "src/validation/register.schema";
 
 const getLoignPage = async (req: Request, res: Response) => {
+  
   return res.render("client/auth/login.ejs");
 };
 
