@@ -1,6 +1,6 @@
 import { ACCOUNT_TYPE } from "config/constant";
 import { prisma } from "config/prismaClient";
-import { hashPassword } from "services/admin/userService";
+import { comparePassword, hashPassword } from "services/admin/userService";
 
 const isEmailExist = async (email: string) => {
   const user = await prisma.user.findUnique({
