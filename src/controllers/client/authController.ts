@@ -6,8 +6,12 @@ import {
 } from "src/validation/register.schema";
 
 const getLoignPage = async (req: Request, res: Response) => {
-  
-  return res.render("client/auth/login.ejs");
+  const { session } = req as any;
+  const messages = session?.messages ?? [];
+  session.messages = null;
+  return res.render("client/auth/login.ejs", {
+    errors: messages,
+  });
 };
 
 const getRegisterPage = async (req: Request, res: Response) => {

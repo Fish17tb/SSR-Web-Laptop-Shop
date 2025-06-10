@@ -38,6 +38,16 @@ import passport from "passport";
 
 const router = express.Router();
 
+// Middleware validate input trước khi dùng passport
+const validateLoginInput = (req, res, next) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    req.session.messages = ["Vui lòng điền đầy đủ thông tin!"];
+    return res.redirect("/login");
+  }
+  next();
+};
+
 const webRoute = (app: Express) => {
   //   router.get("/", getHomePage);
 
@@ -94,10 +104,12 @@ const webRoute = (app: Express) => {
   // Client-Routes
   router.get("/login", getLoignPage);
   router.post(
-    "/login",
+    "/handle-login",
+    validateLoginInput,
     passport.authenticate("local", {
       successRedirect: "/",
       failureRedirect: "/login",
+      failureMessage: true,
     })
   );
   router.get("/register", getRegisterPage);

@@ -41,7 +41,7 @@ export const RegisterSchema = z
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Mật khẩu không chính xác",
+    message: "Mật khẩu không trùng nhau",
     path: ["confirmPassword"],
   });
 
