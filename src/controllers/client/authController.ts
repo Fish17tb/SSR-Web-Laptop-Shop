@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { registerNewUser } from "services/client/authService";
 import {
   RegisterSchema,
@@ -54,4 +54,32 @@ const handleRegister = async (req: Request, res: Response) => {
   }
 };
 
-export { getLoignPage, getRegisterPage, handleRegister };
+const handleLogout = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+};
+
+const authorizeByRole = (req: Request, res: Response) => {
+  const user = req.user as any;
+  if (user?.role?.name === "ADMIN") {
+    res.redirect("/admin");
+  } else {
+    return res.redirect("/");
+  }
+};
+
+export {
+  getLoignPage,
+  getRegisterPage,
+  handleRegister,
+  handleLogout,
+  authorizeByRole,
+};

@@ -3,8 +3,8 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import {
   comparePassword,
-  getPageDetailUserService,
 } from "services/admin/userService";
+import { getUserWithRoleById } from "services/client/authService";
 
 const configPassportLocal = () => {
   passport.use(
@@ -39,6 +39,7 @@ const configPassportLocal = () => {
             message: `Tài khoản ${username} không tồn tại trong hệ thống!`,
           });
         }
+        
 
         // Compare password
         const isMatch = await comparePassword(password, user.password);
@@ -48,7 +49,7 @@ const configPassportLocal = () => {
             message: `Mật khẩu không chính xác!`,
           });
         }
-        return callback(null, user);
+        return callback(null, user as any);
       }
     )
   );
@@ -63,8 +64,8 @@ const configPassportLocal = () => {
   passport.deserializeUser(async function (user: any, callback) {
     const { id, email } = user;
 
-    // query to database
-    const userInDB = await getPageDetailUserService(id);
+    // Query to database
+    const userInDB = await getUserWithRoleById(id);
     return callback(null, { ...userInDB });
   });
 };

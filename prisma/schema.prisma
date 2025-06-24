@@ -13,12 +13,14 @@ model User {
   password    String  @db.VarChar(255)
   email       String  @unique @db.VarChar(255)
   address     String? @db.VarChar(255)
-  phone       String?  @db.VarChar(255)
+  phone       String? @db.VarChar(255)
   accountType String  @db.VarChar(255)
   avatar      String? @db.VarChar(255)
 
   role   Role @relation(fields: [roleId], references: [id])
   roleId Int // FK
+
+  cart Cart?
 
   @@map("users")
 }
@@ -45,6 +47,8 @@ model Product {
   factory    String  @db.VarChar(255)
   target     String  @db.VarChar(255)
 
+  cartDetail Cart_Detail[]
+
   @@map("products")
 }
 
@@ -58,7 +62,28 @@ model Order {
 model Session {
   id        String   @id
   sid       String   @unique
-  data      String  @db.MediumText
-  expiresAt   DateTime
+  data      String   @db.MediumText
+  expiresAt DateTime
 }
 
+model Cart {
+  id     Int  @id @default(autoincrement())
+  sum    Int
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @unique // relation scalar field (used in the `@relation` attribute above)
+
+  cartDetail Cart_Detail[]
+
+  @@map("carts")
+}
+
+model Cart_Detail {
+  id        Int     @id @default(autoincrement())
+  sum       Int
+  cart      Cart    @relation(fields: [cartId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+  cartId    Int
+  productId Int
+
+  @@map("cart_detail")
+}
