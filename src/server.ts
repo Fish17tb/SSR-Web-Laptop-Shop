@@ -1,3 +1,6 @@
+// Triple-Slash Directives
+/// <reference path="./types/index.d.ts" />
+
 import express from "express";
 import "dotenv/config";
 import webRoute from "./routes/web";
@@ -13,48 +16,66 @@ const port = process.env.PORT || 8888;
 
 const app = express();
 
-// config req.body
-app.use(express.json()); // for json
-app.use(express.urlencoded({ extended: true })); // for form data
+// Config req.body
+app.use(express.json()); // For json
+app.use(express.urlencoded({ extended: true })); // For form data
 
-// config session
+// Config session
 app.use(
   session({
     // Cookie: thời gian hết hạn của sesstion
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000, // ms
     },
+    //Security key
     secret: "a santa at nasa",
+
+    // Forces sesion save even if unchanged
     resave: false,
+
+    // Saves unmodified sessions
     saveUninitialized: false,
+
     store: new PrismaSessionStore(new PrismaClient(), {
-      checkPeriod: 2 * 60 * 1000, //ms
+      // Clears expired sessions every 1 day
+      checkPeriod: 1 * 24 * 60 * 60 * 1000, //ms
       dbRecordIdIsSessionId: true,
       dbRecordIdFunction: undefined,
     }),
   })
 );
 
-// config passport
+// Config passport (create variable req.user)
 app.use(passport.initialize());
 app.use(passport.authenticate("session"));
 configPassportLocal();
 
-// config view engine
+// Congfig globlal
+app.use((req, res, next) => {
+  res.locals.user = req.user || null; // Pass user object to all views
+  next();
+});
+
+// Config view engine
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 
-// config static file (public)
+// Config static file (public)
 app.use(express.static("public"));
 
-// declare routes
+// Declare routes
 webRoute(app);
 
-// connect database
+// Connect database
 getConnection();
 
-//seeding data
+// Seeding data
 initDataFake();
+
+// Handle status 404
+app.use((req, res) => {
+  res.render("status/404.ejs");
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

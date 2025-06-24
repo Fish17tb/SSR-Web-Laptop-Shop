@@ -103,8 +103,6 @@
 .create-account-btn:hover,
 .login-account-btn:hover {
   background-color: #8cd608;
-  
-  
 }
 
 .progress-bar-timer {
@@ -11726,3 +11724,6 @@ body {
   font-size: 0.75rem;
   border-radius: 0.375rem !important;
 }
+
+
+

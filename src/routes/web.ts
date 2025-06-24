@@ -30,11 +30,14 @@ import {
   handleUpdateProduct,
 } from "controllers/admin/productController";
 import {
+  authorizeByRole,
   getLoignPage,
   getRegisterPage,
+  handleLogout,
   handleRegister,
 } from "controllers/client/authController";
 import passport from "passport";
+import { blockIfAuthenticated, isAdmin, isLoggedIn } from "src/middleware/auth";
 
 const router = express.Router();
 
@@ -58,7 +61,7 @@ const webRoute = (app: Express) => {
   //   router.post("/handle-update-user/:id", handleUpdateUser);
 
   // Admin-Routes
-  router.get("/admin", getDashboardPage);
+  router.get("/admin", isAdmin, getDashboardPage);
 
   // Admin-User
   router.get("/admin/user", getPageManageUsers);
@@ -102,22 +105,27 @@ const webRoute = (app: Express) => {
   router.get("/admin/order", getAdminOrderPage);
 
   // Client-Routes
-  router.get("/login", getLoignPage);
+
+  // Middleware
+  router.get("/middleware-role", authorizeByRole);
+
+  router.get("/login", isLoggedIn, getLoignPage);
   router.post(
     "/handle-login",
     validateLoginInput,
     passport.authenticate("local", {
-      successRedirect: "/",
+      successRedirect: "/middleware-role",
       failureRedirect: "/login",
       failureMessage: true,
     })
   );
-  router.get("/register", getRegisterPage);
+  router.get("/register", blockIfAuthenticated, getRegisterPage);
   router.post("/handle-register", handleRegister);
+  router.post("/logout", handleLogout);
   router.get("/", getHomePage);
   router.get("/detail-product/:id", getPageDetailProduct);
 
-  app.use("/", router);
+  app.use("/", isAdmin, router);
 };
 
 export default webRoute;
