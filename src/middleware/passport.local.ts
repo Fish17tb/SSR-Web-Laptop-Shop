@@ -1,10 +1,11 @@
 import { prisma } from "config/prismaClient";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
+import { comparePassword } from "services/admin/userService";
 import {
-  comparePassword,
-} from "services/admin/userService";
-import { getUserWithRoleById } from "services/client/authService";
+  getUserSumCart,
+  getUserWithRoleById,
+} from "services/client/authService";
 
 const configPassportLocal = () => {
   passport.use(
@@ -39,7 +40,6 @@ const configPassportLocal = () => {
             message: `Tài khoản ${username} không tồn tại trong hệ thống!`,
           });
         }
-        
 
         // Compare password
         const isMatch = await comparePassword(password, user.password);
@@ -65,8 +65,10 @@ const configPassportLocal = () => {
     const { id, email } = user;
 
     // Query to database
-    const userInDB = await getUserWithRoleById(id);
-    return callback(null, { ...userInDB });
+    const userInDB: any = await getUserWithRoleById(id);
+    const sumCart: any = await getUserSumCart(id);
+    console.log("check-sumCart", sumCart);
+    return callback(null, { ...userInDB, sumCart: sumCart });
   });
 };
 

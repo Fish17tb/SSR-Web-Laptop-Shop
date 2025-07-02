@@ -20,7 +20,7 @@ import {
 } from "controllers/admin/userController";
 import uploadSingleFile from "src/middleware/fileUpload";
 import { getHomePage } from "controllers/client/homeController";
-import { getPageDetailProduct } from "controllers/client/productController";
+import { addProductToCart, getPageDetailProduct } from "controllers/client/productController";
 import {
   getPageCreateProduct,
   getPageDetailProducts,
@@ -38,6 +38,7 @@ import {
 } from "controllers/client/authController";
 import passport from "passport";
 import { blockIfAuthenticated, isAdmin, isLoggedIn } from "src/middleware/auth";
+import { getCartPage } from "controllers/client/cartController";
 
 const router = express.Router();
 
@@ -124,6 +125,9 @@ const webRoute = (app: Express) => {
   router.post("/logout", handleLogout);
   router.get("/", getHomePage);
   router.get("/detail-product/:id", getPageDetailProduct);
+
+  router.post("/add-product-to-cart/:id", addProductToCart)
+  router.get("/cart", getCartPage)
 
   app.use("/", isAdmin, router);
 };
