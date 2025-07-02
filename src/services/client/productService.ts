@@ -6,7 +6,81 @@ const getProductById = async (id: number) => {
       id: id,
     },
   });
-  return product
+  return product;
 };
 
-export { getProductById };
+const addProductToCartService = async (
+  quantity: number,
+  productId: number,
+  user: Express.User
+) => {
+  const cart = await prisma.cart.findUnique({
+    where: {
+      userId: user.id,
+    },
+  });
+
+  const product = await prisma.product.findUnique({
+    where: { id: productId },
+  });
+
+  if (cart) {
+    // update
+    // cập nhật sum giỏ hàng
+    await prisma.cart.update({
+      where: { id: cart.id },
+      data: {
+        sum: {
+          increment: quantity,
+        },
+      },
+    });
+
+    // cập nhật cart-detail
+    // nếu chưa có, tạo mới ngược lại có rồi, cập nhật quantity
+
+    const currentCartDetail = await prisma.cartDetail.findFirst({
+      where: {
+        productId: productId,
+        cartId: cart.id,
+      },
+    });
+
+    // upsert = update + insert
+    await prisma.cartDetail.upsert({
+      where: {
+        id: currentCartDetail?.id ?? 0,
+      },
+      update: {
+        quantity: {
+          increment: quantity,
+        },
+      },
+      create: {
+        cartId: cart.id,
+        productId: productId,
+        price: product.price,
+        quantity: quantity,
+      },
+    });
+  } else {
+    // create
+    await prisma.cart.create({
+      data: {
+        sum: quantity,
+        userId: user.id,
+        cartDetail: {
+          create: [
+            {
+              price: product.price,
+              quantity: quantity,
+              productId: productId,
+            },
+          ],
+        },
+      },
+    });
+  }
+};
+
+export { getProductById, addProductToCartService };

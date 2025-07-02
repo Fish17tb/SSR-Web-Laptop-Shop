@@ -33,6 +33,17 @@
 
 <body>
 
+    <script>
+        function submitAddToCart(item) {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/add-product-to-cart/${item}`;
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+
+
     <!-- Spinner Start -->
     <div id="spinner"
         class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
@@ -106,7 +117,8 @@
                                                                                     }).format(item.price) %>
                                                                             </p>
                                                                             <a href="#"
-                                                                                class="mt-2 mx-auto btn border border-secondary rounded-pill px-3 text-primary">
+                                                                                class="mt-2 mx-auto btn border border-secondary rounded-pill px-3 text-primary"
+                                                                                onclick="submitAddToCart('<%= item.id %>')">
                                                                                 <i
                                                                                     class="fa fa-shopping-bag me-2 text-primary"></i>
                                                                                 Add to cart
