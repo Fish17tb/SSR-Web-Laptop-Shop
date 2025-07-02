@@ -47,7 +47,7 @@ model Product {
   factory    String  @db.VarChar(255)
   target     String  @db.VarChar(255)
 
-  cartDetail CartDetail[]
+  cartDetail Cart_Detail[]
 
   @@map("products")
 }
@@ -69,23 +69,20 @@ model Session {
 model Cart {
   id     Int  @id @default(autoincrement())
   sum    Int
-
   user   User @relation(fields: [userId], references: [id])
   userId Int  @unique // relation scalar field (used in the `@relation` attribute above)
 
-  cartDetail CartDetail[]
+  cartDetail Cart_Detail[]
 
   @@map("carts")
 }
 
-model CartDetail {
+model Cart_Detail {
   id        Int     @id @default(autoincrement())
-  price     Int
-  quantity  Int
-  
+  sum       Int
   cart      Cart    @relation(fields: [cartId], references: [id])
-  cartId    Int
   product   Product @relation(fields: [productId], references: [id])
+  cartId    Int
   productId Int
 
   @@map("cart_detail")
