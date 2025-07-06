@@ -67,7 +67,7 @@ const configPassportLocal = () => {
     // Query to database
     const userInDB: any = await getUserWithRoleById(id);
     const sumCart: any = await getUserSumCart(id);
-    console.log("check-sumCart", sumCart);
+    // console.log("check-sumCart", sumCart);
     return callback(null, { ...userInDB, sumCart: sumCart });
   });
 };
