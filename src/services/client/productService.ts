@@ -83,12 +83,10 @@ const addProductToCartService = async (
   }
 };
 
-
 const getProductInCart = async (userId: number) => {
   const cart = await prisma.cart.findUnique({
     where: { userId: userId },
   });
-
   if (cart) {
     const currentCartDetail = await prisma.cartDetail.findMany({
       where: {
@@ -100,11 +98,35 @@ const getProductInCart = async (userId: number) => {
     });
     return currentCartDetail;
   }
-  return []
+  return [];
 };
 
+const handleDeleteProductInCart = async (cartDetailId: number, userId: number, sumCart: number) => {
+  // xóa cart-detail
+  await prisma.cartDetail.delete({
+    where: {id: cartDetailId}
+  })
+
+  if(sumCart === 1) {
+    // delete cart
+    await prisma.cart.delete({
+      where: {userId}
+    })
+  } else {
+    // update cart
+    await prisma.cart.update({
+      where: {userId},
+      data: {
+        sum: {
+          decrement: 1
+        }
+      }
+    })
+  }
+}
 export {
   getProductById,
   addProductToCartService,
   getProductInCart,
+  handleDeleteProductInCart,
 };
