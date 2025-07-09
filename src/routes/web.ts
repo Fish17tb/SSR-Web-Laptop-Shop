@@ -20,7 +20,11 @@ import {
 } from "controllers/admin/userController";
 import uploadSingleFile from "src/middleware/fileUpload";
 import { getHomePage } from "controllers/client/homeController";
-import { addProductToCart, getPageDetailProduct } from "controllers/client/productController";
+import {
+  addProductToCart,
+  getPageDetailProduct,
+  deleteProductInCart,
+} from "controllers/client/productController";
 import {
   getPageCreateProduct,
   getPageDetailProducts,
@@ -126,8 +130,9 @@ const webRoute = (app: Express) => {
   router.get("/", getHomePage);
   router.get("/detail-product/:id", getPageDetailProduct);
 
-  router.post("/add-product-to-cart/:id", addProductToCart)
-  router.get("/cart", getCartPage)
+  router.post("/add-product-to-cart/:id", addProductToCart);
+  router.get("/cart", getCartPage);
+  router.post("/handle-delete-product-in-cart/:id", deleteProductInCart);
 
   app.use("/", isAdmin, router);
 };

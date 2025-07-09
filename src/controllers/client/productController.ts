@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {
   addProductToCartService,
+  handleDeleteProductInCart,
   getProductById,
 } from "services/client/productService";
 
@@ -23,4 +24,15 @@ const addProductToCart = async (req: Request, res: Response) => {
   return res.redirect("/");
 };
 
-export { getPageDetailProduct, addProductToCart };
+const deleteProductInCart = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const user = req.user;
+  if (user) {
+    await handleDeleteProductInCart(+id, user.id, user.sumCart);
+    return res.redirect("/cart");
+  } else {
+    return res.redirect("/login");
+  }
+};
+
+export { getPageDetailProduct, addProductToCart, deleteProductInCart };
