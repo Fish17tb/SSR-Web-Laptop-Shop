@@ -1,4 +1,6 @@
+import { CartDetail } from "./../../../node_modules/.prisma/client/index.d";
 import { Request, Response } from "express";
+import { updateCartBeforeToCheckOut } from "services/client/cartService";
 import { getProductInCart } from "services/client/productService";
 
 const getCartPage = async (req: Request, res: Response) => {
@@ -21,4 +23,15 @@ const getCartPage = async (req: Request, res: Response) => {
   }
 };
 
-export { getCartPage };
+const handleCartBeforeToCheckOut = async (req: Request, res: Response) => {
+  const user = req.user;
+  if (!user) return res.redirect("/login");
+
+  const currentCartDetail: { id: string; quantity: string }[] =
+    req.body?.cartDetails ?? [];
+
+  await updateCartBeforeToCheckOut(currentCartDetail);
+  return res.redirect("/checkout");
+};
+
+export { getCartPage, handleCartBeforeToCheckOut };
