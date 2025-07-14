@@ -101,29 +101,33 @@ const getProductInCart = async (userId: number) => {
   return [];
 };
 
-const handleDeleteProductInCart = async (cartDetailId: number, userId: number, sumCart: number) => {
+const handleDeleteProductInCart = async (
+  cartDetailId: number,
+  userId: number,
+  sumCart: number
+) => {
   // xóa cart-detail
   await prisma.cartDetail.delete({
-    where: {id: cartDetailId}
-  })
+    where: { id: cartDetailId },
+  });
 
-  if(sumCart === 1) {
+  if (sumCart === 1) {
     // delete cart
     await prisma.cart.delete({
-      where: {userId}
-    })
+      where: { userId },
+    });
   } else {
     // update cart
     await prisma.cart.update({
-      where: {userId},
+      where: { userId },
       data: {
         sum: {
-          decrement: 1
-        }
-      }
-    })
+          decrement: 1,
+        },
+      },
+    });
   }
-}
+};
 export {
   getProductById,
   addProductToCartService,

@@ -488,3 +488,9 @@
   line-height: 35px;
 }
 /*** Footer End ***/
+
+
+.hnv-custom-heading {
+  font-size: 20px;
+  margin-bottom: 0 !important;
+}
