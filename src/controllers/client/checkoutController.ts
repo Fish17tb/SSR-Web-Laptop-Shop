@@ -18,4 +18,8 @@ const getCheckOutpage = async (req: Request, res: Response) => {
   });
 };
 
-export { getCheckOutpage };
+const getPageThanks = (req: Request, res: Response) => {
+return res.render("client/checkout/thanks.ejs")
+};
+
+export { getCheckOutpage, getPageThanks };

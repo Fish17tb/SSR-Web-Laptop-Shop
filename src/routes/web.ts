@@ -42,8 +42,12 @@ import {
 } from "controllers/client/authController";
 import passport from "passport";
 import { blockIfAuthenticated, isAdmin, isLoggedIn } from "src/middleware/auth";
-import { getCartPage, handleCartBeforeToCheckOut } from "controllers/client/cartController";
-import { getCheckOutpage } from "controllers/client/checkoutController";
+import {
+  getCartPage,
+  handleCartBeforeToCheckOut,
+  handlePlaceOrder,
+} from "controllers/client/cartController";
+import { getCheckOutpage, getPageThanks } from "controllers/client/checkoutController";
 
 const router = express.Router();
 
@@ -135,7 +139,9 @@ const webRoute = (app: Express) => {
   router.get("/cart", getCartPage);
   router.post("/handle-delete-product-in-cart/:id", deleteProductInCart);
   router.post("/handle-cart-before-to-checkout", handleCartBeforeToCheckOut);
-  router.get("/checkout", getCheckOutpage)
+  router.get("/checkout", getCheckOutpage);
+  router.post("/place-order", handlePlaceOrder);
+  router.get("/thanks", getPageThanks)
 
   app.use("/", isAdmin, router);
 };

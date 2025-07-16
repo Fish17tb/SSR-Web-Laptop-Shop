@@ -69,7 +69,7 @@ const addProductToCartService = async (
       data: {
         sum: quantity,
         userId: user.id,
-        cartDetail: {
+        cartDetails: {
           create: [
             {
               price: product.price,
