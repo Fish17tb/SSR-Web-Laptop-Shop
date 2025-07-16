@@ -1,7 +1,11 @@
 import { CartDetail } from "./../../../node_modules/.prisma/client/index.d";
 import { Request, Response } from "express";
-import { updateCartBeforeToCheckOut } from "services/client/cartService";
+import {
+  handlePlaceOrderService,
+  updateCartBeforeToCheckOut,
+} from "services/client/cartService";
 import { getProductInCart } from "services/client/productService";
+import { getPageThanks } from "./checkoutController";
 
 const getCartPage = async (req: Request, res: Response) => {
   const user = req.user;
@@ -34,4 +38,21 @@ const handleCartBeforeToCheckOut = async (req: Request, res: Response) => {
   return res.redirect("/checkout");
 };
 
-export { getCartPage, handleCartBeforeToCheckOut };
+const handlePlaceOrder = async (req: Request, res: Response) => {
+  const user = req.user;
+  if (!user) return res.redirect("/login");
+
+  const { receiverName, receiverAddress, receiverPhone, totalPrice } = req.body;
+
+  await handlePlaceOrderService(
+    user.id,
+    receiverName,
+    receiverAddress,
+    receiverPhone,
+    +totalPrice
+  );
+
+  return res.redirect("/thanks");
+};
+
+export { getCartPage, handleCartBeforeToCheckOut, handlePlaceOrder };
