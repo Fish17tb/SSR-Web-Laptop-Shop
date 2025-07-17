@@ -40,10 +40,6 @@ const getAdminProductPage = async (req: Request, res: Response) => {
   return res.render("admin/product/manageProduct.ejs");
 };
 
-const getAdminOrderPage = async (req: Request, res: Response) => {
-  return res.render("admin/order/mangeOrder.ejs");
-};
-
 const handleDeleteUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   await handleDeleteUserService(id);
@@ -74,7 +70,6 @@ export {
   getDashboardPage,
   getPageManageUsers,
   getAdminProductPage,
-  getAdminOrderPage,
   getPageCreateUser,
   handleCreateUser,
   handleDeleteUser,

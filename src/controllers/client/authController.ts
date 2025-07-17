@@ -50,7 +50,7 @@ const handleRegister = async (req: Request, res: Response) => {
   } else {
     // Success
     await registerNewUser(fullName, email, password);
-    return res.redirect("/");
+    return res.redirect("/login");
   }
 };
 

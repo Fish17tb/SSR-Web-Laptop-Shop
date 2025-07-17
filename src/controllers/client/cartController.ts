@@ -5,7 +5,6 @@ import {
   updateCartBeforeToCheckOut,
 } from "services/client/cartService";
 import { getProductInCart } from "services/client/productService";
-import { getPageThanks } from "./checkoutController";
 
 const getCartPage = async (req: Request, res: Response) => {
   const user = req.user;

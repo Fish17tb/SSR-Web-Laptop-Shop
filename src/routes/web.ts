@@ -9,8 +9,6 @@ import express, { Express } from "express";
 // } from "controllers/userController";
 import {
   getPageCreateUser,
-  getAdminOrderPage,
-  getAdminProductPage,
   getDashboardPage,
   getPageManageUsers,
   handleCreateUser,
@@ -47,7 +45,14 @@ import {
   handleCartBeforeToCheckOut,
   handlePlaceOrder,
 } from "controllers/client/cartController";
-import { getCheckOutpage, getPageThanks } from "controllers/client/checkoutController";
+import {
+  getCheckOutpage,
+  getPageThanks,
+} from "controllers/client/checkoutController";
+import {
+  getPageDetailOrders,
+  getPageManageOrders,
+} from "controllers/admin/ordercontroller";
 
 const router = express.Router();
 
@@ -112,7 +117,10 @@ const webRoute = (app: Express) => {
   //     res.send("File uploaded successfully");
   //   }
   // );
-  router.get("/admin/order", getAdminOrderPage);
+
+  // Admin Order
+  router.get("/admin/order", getPageManageOrders);
+  router.get("/admin/handle-view-order/:id", getPageDetailOrders);
 
   // Client-Routes
 
@@ -141,7 +149,7 @@ const webRoute = (app: Express) => {
   router.post("/handle-cart-before-to-checkout", handleCartBeforeToCheckOut);
   router.get("/checkout", getCheckOutpage);
   router.post("/place-order", handlePlaceOrder);
-  router.get("/thanks", getPageThanks)
+  router.get("/thanks", getPageThanks);
 
   app.use("/", isAdmin, router);
 };
