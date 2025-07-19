@@ -166,7 +166,13 @@
     const index = input.attr("data-cart-detail-index");
     const el = document.getElementById(`cartDetails[${index}]`);
     if (el) {
-      el.value = newVal;
+      $(el).val(newVal);
+    }
+
+    // set quantity for detail page
+    const elDetail = document.getElementById("quantityDetail");
+    if (elDetail) {
+      $(elDetail).val(newVal);
     }
 
     //get price

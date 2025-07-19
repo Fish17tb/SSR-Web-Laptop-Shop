@@ -26,59 +26,52 @@
                                 <li class="breadcrumb-item"><a href="/admin/order">Order</a></li>
                                 <li class="breadcrumb-item active">View Detail</li>
                             </ol>
-                            <% const shownOrderIds=new Set(); %>
-                                <% orderDetails.forEach(orderDetail=> { %>
-                                    <% if (!shownOrderIds.has(orderDetail.order.id)) { %>
-                                        <h3>Order Detail With id = <%= orderDetail.order.id %>
-                                        </h3>
-                                        <% shownOrderIds.add(orderDetail.order.id); %>
-                                            <% } %>
-                                                <% }) %>
-                                                    <div>
-                                                        <table class="table table-hover table-bordered">
-                                                            <thead>
-                                                                <th>Product</th>
-                                                                <th>Name Product</th>
-                                                                <th>Price</th>
-                                                                <th>Quantity</th>
-                                                                <th>Money</th>
-                                                            </thead>
-                                                            <tbody>
-                                                                <%orderDetails.forEach(function(orderDetail) { %>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <img src="/images/product/<%=orderDetail.product.image %>"
-                                                                                class="img-fluid rounded-circle"
-                                                                                style="width: 80px; height: 80px;"
-                                                                                alt="">
-                                                                        </td>
-                                                                        <td>
-                                                                            <%=orderDetail.product.name%>
-                                                                        </td>
-                                                                        <td>
-                                                                            <%= new Intl.NumberFormat('vi-VN', {
-                                                                                style: "currency" , currency: "VND"
-                                                                                }).format(orderDetail.product.price) %>
-                                                                        </td>
-                                                                        <td>
-                                                                            <%=orderDetail.product.quantity%>
-                                                                        </td>
-                                                                        <td>
-                                                                            <%= new Intl.NumberFormat('vi-VN', {
-                                                                                style: "currency" , currency: "VND"
-                                                                                }).format(orderDetail.order.totalPrice)
-                                                                                %>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <% }) %>
-                                                            </tbody>
-                                                        </table>
-                                                        <button
-                                                            style="padding: 5px 20px; border: none; outline: none; background-color: #000; border-radius: 5px;">
-                                                            <a style="text-decoration: none; color: #fff;"
-                                                                href="/admin/order">Back</a>
-                                                        </button>
-                                                    </div>
+
+                            <div>
+                                <h3>Order deatail with id = <%=id%>
+                                </h3>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <th>Product</th>
+                                        <th>Name Product</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total Price</th>
+                                    </thead>
+                                    <tbody>
+                                        <%orderDetails.forEach(function(orderDetail) { %>
+                                            <tr>
+                                                <td>
+                                                    <img src="/images/product/<%=orderDetail.product.image %>"
+                                                        class="img-fluid rounded-circle"
+                                                        style="width: 80px; height: 80px;" alt="">
+                                                </td>
+                                                <td>
+                                                    <%=orderDetail.product.name%>
+                                                </td>
+                                                <td>
+                                                    <%= new Intl.NumberFormat('vi-VN', { style: "currency" ,
+                                                        currency: "VND" }).format(orderDetail.product.price) %>
+                                                </td>
+                                                <td>
+                                                    <%=orderDetail.quantity%>
+                                                </td>
+                                                <td>
+                                                    <%= new Intl.NumberFormat('vi-VN', { style: "currency" ,
+                                                        currency: "VND" }).format(orderDetail.price *
+                                                        orderDetail.quantity) %>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                    </tbody>
+                                </table>
+                                <button
+                                    style="padding: 5px 20px; border: none; outline: none; background-color: #000; border-radius: 5px;">
+                                    <a style="text-decoration: none; color: #fff;" href="/admin/order">Back</a>
+                                </button>
+                            </div>
                         </div>
                     </main>
                     <%- include('../layout/footer.ejs'); -%>

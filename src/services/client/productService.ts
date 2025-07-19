@@ -107,6 +107,12 @@ const handleDeleteProductInCart = async (
   sumCart: number
 ) => {
   // xóa cart-detail
+  const currentCartDetail = await prisma.cartDetail.findUnique({
+    where: { id: cartDetailId },
+  });
+
+  const quantity = currentCartDetail.quantity;
+
   await prisma.cartDetail.delete({
     where: { id: cartDetailId },
   });
@@ -122,7 +128,7 @@ const handleDeleteProductInCart = async (
       where: { userId },
       data: {
         sum: {
-          decrement: 1,
+          decrement: quantity,
         },
       },
     });

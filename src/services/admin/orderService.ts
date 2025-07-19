@@ -10,11 +10,11 @@ const getListOrders = async () => {
   return orders;
 };
 
-const getListDetailOrders = async () => {
+const getListDetailOrders = async (orderId: number) => {
   const orderDetails = await prisma.orderDetail.findMany({
+    where: { orderId },
     include: {
       product: true,
-      order: true,
     },
   });
 
