@@ -9,7 +9,6 @@ import express, { Express } from "express";
 // } from "controllers/userController";
 import {
   getPageCreateUser,
-  getDashboardPage,
   getPageManageUsers,
   handleCreateUser,
   handleDeleteUser,
@@ -22,6 +21,7 @@ import {
   addProductToCart,
   getPageDetailProduct,
   deleteProductInCart,
+  addProductToCartFromDetailProduct,
 } from "controllers/client/productController";
 import {
   getPageCreateProduct,
@@ -52,7 +52,9 @@ import {
 import {
   getPageDetailOrders,
   getPageManageOrders,
-} from "controllers/admin/ordercontroller";
+} from "controllers/admin/orderController";
+import { getPageOrderHistory } from "controllers/client/historyController";
+import { getDashboardPage } from "controllers/admin/dashboardController";
 
 const router = express.Router();
 
@@ -144,12 +146,15 @@ const webRoute = (app: Express) => {
   router.get("/detail-product/:id", getPageDetailProduct);
 
   router.post("/add-product-to-cart/:id", addProductToCart);
+  router.post("/add-product-to-cart-in-detail-product/:id", addProductToCartFromDetailProduct);
   router.get("/cart", getCartPage);
   router.post("/handle-delete-product-in-cart/:id", deleteProductInCart);
   router.post("/handle-cart-before-to-checkout", handleCartBeforeToCheckOut);
   router.get("/checkout", getCheckOutpage);
   router.post("/place-order", handlePlaceOrder);
   router.get("/thanks", getPageThanks);
+
+  router.get("/order-history", getPageOrderHistory);
 
   app.use("/", isAdmin, router);
 };

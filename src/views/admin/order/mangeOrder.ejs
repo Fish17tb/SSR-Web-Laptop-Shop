@@ -25,54 +25,50 @@
                 <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
                 <li class="breadcrumb-item active">Order</li>
               </ol>
-              <% orders.forEach(order=> { %>
-                <h3>List Orders With id = <%= order.id %>
-                </h3>
-                <% }) %>
-                  <%=JSON.stringify(orders.orderDetails) %>
-                    <div>
-                      <table class="table table-hover table-bordered">
-                        <thead>
-                          <th>ID</th>
-                          <th>User</th>
-                          <th>Total Price</th>
-                          <th>Status</th>
-                          <th>Payment Method</th>
-                          <th>Payment Status</th>
-                          <th>Action</th>
-                        </thead>
-                        <tbody>
-                          <%orders.forEach(function(order) { %>
-                            <tr>
-                              <td>
-                                <%=order.id%>
-                              </td>
-                              <td>
-                                <%=order.user.fullName%>
-                              </td>
-                              <td>
-                                <%= new Intl.NumberFormat('vi-VN', { style: "currency" , currency: "VND"
-                                  }).format(order.totalPrice) %>
-                              </td>
-                              <td>
-                                <%=order.status%>
-                              </td>
-                              <td>
-                                <%=order.paymentMethod%>
-                              </td>
-                              <td>
-                                <%=order.paymentStatus%>
-                              </td>
-                              <td>
-                                <form action="/admin/handle-view-order/<%=order.id%>" method="get">
-                                  <button class="btn btn-warning">View Detail</button>
-                                </form>
-                              </td>
-                            </tr>
-                            <% }) %>
-                        </tbody>
-                      </table>
-                    </div>
+
+              <div>
+                <table class="table table-hover table-bordered">
+                  <thead>
+                    <th>ID</th>
+                    <th>User</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <th>Payment Method</th>
+                    <th>Payment Status</th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody>
+                    <%orders.forEach(function(order) { %>
+                      <tr>
+                        <td>
+                          <%=order.id%>
+                        </td>
+                        <td>
+                          <%=order.user.fullName%>
+                        </td>
+                        <td>
+                          <%= new Intl.NumberFormat('vi-VN', { style: "currency" , currency: "VND"
+                            }).format(order.totalPrice) %>
+                        </td>
+                        <td>
+                          <%=order.status%>
+                        </td>
+                        <td>
+                          <%=order.paymentMethod%>
+                        </td>
+                        <td>
+                          <%=order.paymentStatus%>
+                        </td>
+                        <td>
+                          <form action="/admin/handle-view-order/<%=order.id%>" method="get">
+                            <button class="btn btn-warning">View Detail</button>
+                          </form>
+                        </td>
+                      </tr>
+                      <% }) %>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </main>
           <%- include('../layout/footer.ejs'); -%>

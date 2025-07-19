@@ -24,6 +24,21 @@ const addProductToCart = async (req: Request, res: Response) => {
   return res.redirect("/");
 };
 
+const addProductToCartFromDetailProduct = async (
+  req: Request,
+  res: Response
+) => {
+  const { id } = req.params;
+  const { quantity } = req.body;
+  const user = req.user;
+
+  if (!user) return res.redirect("/login");
+
+  await addProductToCartService(+quantity, +id, user);
+
+  return res.redirect(`/detail-product/${id}`);
+};
+
 const deleteProductInCart = async (req: Request, res: Response) => {
   const { id } = req.params;
   const user = req.user;
@@ -35,4 +50,9 @@ const deleteProductInCart = async (req: Request, res: Response) => {
   }
 };
 
-export { getPageDetailProduct, addProductToCart, deleteProductInCart };
+export {
+  getPageDetailProduct,
+  addProductToCart,
+  deleteProductInCart,
+  addProductToCartFromDetailProduct,
+};

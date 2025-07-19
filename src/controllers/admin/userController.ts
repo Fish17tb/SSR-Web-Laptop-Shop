@@ -8,9 +8,7 @@ import {
   handleUpdateUserService,
 } from "services/admin/userService";
 
-const getDashboardPage = async (req: Request, res: Response) => {
-  return res.render("admin/dashboard/dashboard.ejs");
-};
+
 
 const getPageManageUsers = async (req: Request, res: Response) => {
   const listuser = await getListUserService();
@@ -67,7 +65,6 @@ const handleUpdateUser = async (req: Request, res: Response) => {
 };
 
 export {
-  getDashboardPage,
   getPageManageUsers,
   getAdminProductPage,
   getPageCreateUser,

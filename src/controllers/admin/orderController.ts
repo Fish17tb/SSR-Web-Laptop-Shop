@@ -11,9 +11,9 @@ const getPageManageOrders = async (req: Request, res: Response) => {
 
 const getPageDetailOrders = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const orderDetails = await getListDetailOrders();
+  const orderDetails = await getListDetailOrders(+id);
 
-  return res.render("admin/order/detailOrder.ejs", { orderDetails });
+  return res.render("admin/order/detailOrder.ejs", { orderDetails, id });
 };
 
 export { getPageManageOrders, getPageDetailOrders };
