@@ -19,9 +19,12 @@ const getCartPage = async (req: Request, res: Response) => {
       ?.map((item) => +item.price * +item.quantity)
       ?.reduce((a, b) => a + b, 0);
 
+    const cartId = cartDetails.length ? cartDetails[0].cartId : 0;
+
     return res.render("client/cart/cart.ejs", {
       cartDetails: cartDetails,
       totalPrice: totalPrice,
+      cartId: cartId,
     });
   }
 };
@@ -30,10 +33,11 @@ const handleCartBeforeToCheckOut = async (req: Request, res: Response) => {
   const user = req.user;
   if (!user) return res.redirect("/login");
 
+  const { cartId } = req.body;
   const currentCartDetail: { id: string; quantity: string }[] =
     req.body?.cartDetails ?? [];
 
-  await updateCartBeforeToCheckOut(currentCartDetail);
+  await updateCartBeforeToCheckOut(currentCartDetail, cartId);
   return res.redirect("/checkout");
 };
 
@@ -43,13 +47,17 @@ const handlePlaceOrder = async (req: Request, res: Response) => {
 
   const { receiverName, receiverAddress, receiverPhone, totalPrice } = req.body;
 
-  await handlePlaceOrderService(
+  const message = await handlePlaceOrderService(
     user.id,
     receiverName,
     receiverAddress,
     receiverPhone,
     +totalPrice
   );
+  if (message) {
+    console.log("ck-message", message);
+    return res.redirect("/checkout");
+  }
 
   return res.redirect("/thanks");
 };
