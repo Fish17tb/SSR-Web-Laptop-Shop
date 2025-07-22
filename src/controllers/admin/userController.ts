@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import {
+  countTotalUserPage,
   getAllRoleService,
   getListUserService,
   getPageDetailUserService,
@@ -8,12 +9,18 @@ import {
   handleUpdateUserService,
 } from "services/admin/userService";
 
-
-
 const getPageManageUsers = async (req: Request, res: Response) => {
-  const listuser = await getListUserService();
+  const { page } = req.query;
+
+  let currentPage = page ? +page : 1;
+  if (currentPage <= 0) currentPage = 1;
+
+  const listuser = await getListUserService(currentPage);
+  const totalPages = await countTotalUserPage();
   return res.render("admin/user/manageUser.ejs", {
     listuser: listuser,
+    totalPages: +totalPages,
+    page: +page,
   });
 };
 

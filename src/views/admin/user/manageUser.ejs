@@ -77,9 +77,45 @@
                       <% }) %>
                   </tbody>
                 </table>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination" style="display: flex; justify-content: center; align-items: center;">
+                    <li class="page-item">
+                      <a class="<%=page === 1 ? " disabled page-link" : "page-link" %>"
+                        href="/admin/user?page=<%= page - 1%>"
+                          aria-label="Previous"
+                          >
+                          <span aria-hidden="true">&laquo;</span>
+                          <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+                    <% for (let i=1; i <=totalPages; i++) { %>
+                      <li class="page-item">
+                        <a class="<%=page === i ? " active page-link" : "page-link" %>"
+                          href="/admin/user?page=<%= i%>"
+                            >
+                            <%= i%>
+                        </a>
+                      </li>
+                      <% } %>
+
+                        <li class="page-item">
+                          <a class="<%=page === totalPages ? " disabled page-link" : "page-link" %>"
+                            href="/admin/user?page=<%= page + 1%>"
+                              aria-label="Next"
+                              >
+                              <span aria-hidden="true">&raquo;</span>
+                              <span class="sr-only">Next</span>
+                          </a>
+                        </li>
+                  </ul>
+                </nav>
               </div>
             </div>
           </main>
+
+
           <%- include('../layout/footer.ejs'); -%>
         </div>
     </div>
