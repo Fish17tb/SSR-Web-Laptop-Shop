@@ -3,7 +3,24 @@ import {
   addProductToCartService,
   handleDeleteProductInCart,
   getProductById,
+  getListProducts,
+  countTotalProductPage,
 } from "services/client/productService";
+
+const getProductPage = async (req: Request, res: Response) => {
+  const { page } = req.query;
+
+  let currentPage = page ? +page : 1;
+  if (currentPage <= 0) currentPage = 1;
+
+  const products = await getListProducts(currentPage);
+  const totalPages = await countTotalProductPage();
+  return res.render("client/product/product.ejs", {
+    products,
+    page: +currentPage,
+    totalPages: +totalPages,
+  });
+};
 
 const getPageDetailProduct = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -51,6 +68,7 @@ const deleteProductInCart = async (req: Request, res: Response) => {
 };
 
 export {
+  getProductPage,
   getPageDetailProduct,
   addProductToCart,
   deleteProductInCart,

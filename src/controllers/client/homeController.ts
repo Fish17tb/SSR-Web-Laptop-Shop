@@ -1,14 +1,21 @@
 import { Request, Response } from "express";
-import { getAllProduct } from "services/client/homeService";
+import { countTotalHomePage, getAllProduct } from "services/client/homeService";
 
 const getHomePage = async (req: Request, res: Response) => {
-  const products = await getAllProduct();
   const user = req.user;
   // console.log("ck-user", user)
+
   const { page } = req.query;
-  console.log("ck-query", page);
+
+  let currentPage = page ? +page : 1;
+  if (currentPage <= 0) currentPage = 1;
+
+  const products = await getAllProduct(currentPage);
+  const totalPages = await countTotalHomePage();
   return res.render("client/home/home.ejs", {
     products,
+    page: +currentPage,
+    totalPages: +totalPages,
   });
 };
 

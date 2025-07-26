@@ -446,7 +446,11 @@
 
 /*** Single Page Start ***/
 .pagination {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  padding-left: 0;
+  list-style: none;
 }
 
 .pagination a {
