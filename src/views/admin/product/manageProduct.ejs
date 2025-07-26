@@ -33,7 +33,7 @@
                 ">
                   <!--use JSON.stringify(listuser) to display data type JSON-->
                   <h3>List Products</h3>
-                    <a href="/admin/create-product"><button class="btn btn-primary">Create new product</button></a>
+                  <a href="/admin/create-product"><button class="btn btn-primary">Create new product</button></a>
                 </div>
                 <table class="table table-hover table-bordered">
                   <thead>
@@ -74,6 +74,42 @@
                       <% }) %>
                   </tbody>
                 </table>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                      <a class="<%= page === 1 ? " disabled page-link" : "page-link" %>"
+                        href="/admin/product?page=<%= page - 1%>"
+                          aria-label="Previous"
+                          >
+                          <span aria-hidden="true">&laquo;</span>
+                          <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+                    <% for (let i=0; i < totalPages; i++) { %>
+                      <li class="page-item">
+                        <a class="<%=page === i + 1 ? " active page-link" : "page-link" %>"
+                          href="/admin/product?page=<%= i + 1%>"
+                            >
+                            <%=i + 1%>
+                        </a>
+                      </li>
+                      <% } %>
+
+
+
+                        <li class="page-item">
+                          <a class="<%=page === totalPages ? " disabled page-link" : "page-link" %>"
+                            href="/admin/product?page=<%= page + 1%>"
+                              aria-label="Next"
+                              >
+                              <span aria-hidden="true">&raquo;</span>
+                              <span class="sr-only">Next</span>
+                          </a>
+                        </li>
+                  </ul>
+                </nav>
               </div>
             </div>
           </main>

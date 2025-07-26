@@ -5,3 +5,7 @@ export const ACCOUNT_TYPE = {
 };
 
 export const TOTAL_ITEMS_PER_PAGE = 5;
+
+export const TOTAL_ITEMS_PER_PAGE_CLIENT = 4;
+
+export const TOTAL_ITEMS_PER_PAGE_CLIENT_PRODUCT = 6;

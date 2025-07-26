@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import {
+  countTotalProductPage,
   getListProductService,
   getPageDetailProductService,
   handleCreateProductService,
@@ -10,9 +11,17 @@ import { ProductSchema, TProductSchema } from "src/validation/product.schema";
 // import { handleCreateProductSv } from "services/admin/productService";
 
 const getPageManageProducts = async (req: Request, res: Response) => {
-  const products = await getListProductService();
+  const { page } = req.query;
+
+  let currentPage = page ? +page : 1;
+  if (currentPage <= 0) currentPage = 1;
+
+  const products = await getListProductService(currentPage);
+  const totalPages = await countTotalProductPage();
   return res.render("admin/product/manageProduct.ejs", {
     products: products,
+    page: +currentPage,
+    totalPages: +totalPages,
   });
 };
 
@@ -134,5 +143,5 @@ export {
   handleCreateProduct,
   getPageDetailProducts,
   handleUpdateProduct,
-  handleDeleteProduct
+  handleDeleteProduct,
 };

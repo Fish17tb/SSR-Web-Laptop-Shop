@@ -20,7 +20,7 @@ const getPageManageUsers = async (req: Request, res: Response) => {
   return res.render("admin/user/manageUser.ejs", {
     listuser: listuser,
     totalPages: +totalPages,
-    page: +page,
+    page: +currentPage,
   });
 };
 

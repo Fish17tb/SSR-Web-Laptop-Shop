@@ -22,6 +22,7 @@ import {
   getPageDetailProduct,
   deleteProductInCart,
   addProductToCartFromDetailProduct,
+  getProductPage,
 } from "controllers/client/productController";
 import {
   getPageCreateProduct,
@@ -143,6 +144,7 @@ const webRoute = (app: Express) => {
   router.post("/handle-register", handleRegister);
   router.post("/logout", handleLogout);
   router.get("/", getHomePage);
+  router.get("/products", getProductPage)
   router.get("/detail-product/:id", getPageDetailProduct);
 
   router.post("/add-product-to-cart/:id", addProductToCart);
