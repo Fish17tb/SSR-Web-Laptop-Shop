@@ -5,21 +5,49 @@ import {
   getProductById,
   getListProducts,
   countTotalProductPage,
+  filterProduct,
+  getProductWithFilter,
 } from "services/client/productService";
 
 const getProductPage = async (req: Request, res: Response) => {
-  const { page } = req.query;
+  const {
+    page,
+    factory = "",
+    target = "",
+    price = "",
+    sort = "",
+  } = req.query as {
+    page?: string;
+    factory: string;
+    target: string;
+    price: string;
+    sort: string;
+  };
 
   let currentPage = page ? +page : 1;
   if (currentPage <= 0) currentPage = 1;
 
-  const products = await getListProducts(currentPage);
-  const totalPages = await countTotalProductPage();
+  // const products = await getListProducts(currentPage);
+  // const totalPages = await countTotalProductPage();
+
+  const data = await getProductWithFilter(
+    currentPage,
+    factory,
+    target,
+    price,
+    sort
+  );
+
   return res.render("client/product/product.ejs", {
-    products,
+    products: data.products,
+    totalPages: +data.totalPages,
     page: +currentPage,
-    totalPages: +totalPages,
   });
+
+  // const products = await filterProduct(minPrice as string, maxPrice as string);
+  // res.status(200).json({
+  //   data: products,
+  // });
 };
 
 const getPageDetailProduct = async (req: Request, res: Response) => {
