@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Fruitables - Vegetable Website Template</title>
+    <title> Sản Phẩm - Laptopshop</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -43,8 +43,8 @@
     <%- include('../layout/header'); -%>
         <div class="py-1"></div>
         <!-- Single Product Start -->
-        <div class="container-fluid py-5 mt-5">
-            <div class="container py-5">
+        <div class="container-fluid">
+            <div class="container">
                 <div class="row g-4 mb-5">
                     <div>
                         <nav aria-label="breadcrumb">
@@ -56,10 +56,10 @@
                         </nav>
                     </div>
 
-                    <div class="row g-4 fruite">
+                    <div class="row fruite" style="margin-top: 165px;">
                         <div class="col-12 col-md-4">
                             <div class="row g-4">
-                                <div class="col-12">
+                                <div class="col-12" id="factoryFilter">
                                     <div class="mb-2"><b>Hãng sản xuất</b></div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" id="factory-1" value="APPLE">
@@ -89,7 +89,7 @@
                                     </div>
 
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12" id="targetFilter">
                                     <div class="mb-2"><b>Mục đích sử dụng</b></div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" id="target-1" value="GAMING">
@@ -120,7 +120,7 @@
 
 
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12" id="priceFilter">
                                     <div class="mb-2"><b>Mức giá</b></div>
 
                                     <div class="form-check form-check-inline">
@@ -145,7 +145,7 @@
 
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" id="price-5"
-                                            value="tren-20-triệu">
+                                            value="tren-20-trieu">
                                         <label class="form-check-label" for="price-5">Trên 20 triệu</label>
                                     </div>
                                 </div>
@@ -165,14 +165,14 @@
                                     </div>
 
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" id="sort-3" value="gia-nothing"
-                                            name="radio-sort">
+                                        <input class="form-check-input" type="radio" id="sort-3"
+                                            value="gia-khong-sap-xep" name="radio-sort" checked>
                                         <label class="form-check-label" for="sort-3">Không sắp xếp</label>
                                     </div>
 
                                 </div>
                                 <div class="col-12">
-                                    <button
+                                    <button id="btnFilter"
                                         class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4">
                                         Lọc Sản Phẩm
                                     </button>
@@ -183,72 +183,72 @@
                             <div class="row g-4">
                                 <% products.forEach( function (product) { %>
                                     <div class="col-md-6 col-lg-4">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="/images/product/<%=product.image %>"
-                                                    class="img-fluid w-100 rounded-top" alt="">
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                style="top: 10px; left: 10px;">Laptop</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <h4 style="font-size: 15px;">
-                                                    <a href="/product/<%= product.id %>">
-                                                        <%=product.name %>
-                                                    </a>
-                                                </h4>
-                                                <p style="font-size: 13px;">
-                                                    <%=product.shortDesc %>
-                                                </p>
-                                                <div class="d-flex flex-lg-wrap justify-content-center">
-                                                    <p style="font-size: 15px; text-align: center; width: 100%;"
-                                                        class="text-dark fs-5 fw-bold mb-3">
-                                                        <%= new Intl.NumberFormat('vi-VN', { style: 'currency' ,
-                                                            currency: 'VND' }).format(product.price) %>
-                                                    </p>
-                                                    <form method="post" action="/add-product-to-cart/<%= product.id %>">
-                                                        <button
-                                                            class="mx-auto btn border border-secondary rounded-pill px-3 text-primary">
-                                                            <i class="fa fa-shopping-bag me-2 text-primary"></i>
-                                                            Add to cart
-                                                        </button>
-                                                    </form>
+                                        <form action="/detail-product/<%=product.id%>" method="get">
+                                            <button type="submit" style="all: unset; cursor: pointer; width: 100%;">
+                                                <div class="rounded position-relative fruite-item">
+                                                    <div class="fruite-img">
+                                                        <img src="/images/product/<%= product.image %>"
+                                                            class="img-fluid w-100 rounded-top" alt="">
+                                                    </div>
+                                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                                                        style="top: 10px; left: 10px;">Laptop</div>
+                                                    <div
+                                                        class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                        <h4 style="font-size: 15px;">
+                                                            <%=product.name%>
+                                                        </h4>
+                                                        <p style="font-size: 13px;">
+                                                            <%=product.shortDesc%>
+                                                        </p>
+                                                        <div class="d-flex flex-lg-wrap">
+                                                            <p style="font-size: 15px; text-align: center; width: 100%;"
+                                                                class="text-dark fs-5 fw-bold mb-0">
+                                                                <%= new Intl.NumberFormat('vi-VN', { style: 'currency' ,
+                                                                    currency: 'VND' }).format(product.price) %>
+                                                            </p>
+                                                            <a href="#"
+                                                                class="mt-2 mx-auto btn border border-secondary rounded-pill px-3 text-primary"
+                                                                onclick="submitAddToCart('<%= product.id %>')">
+                                                                <i class="fa fa-shopping-bag me-2 text-primary"></i>
+                                                                Add to cart
+                                                            </a>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </button>
+                                        </form>
                                     </div>
                                     <% }) %>
                                         <!-- Pagination Section -->
-                                        <%= totalPages %>
+                                        <% if (products?.length) { %>
+                                            <div class="pagination d-flex justify-content-center mt-5">
+                                                <li class="<%= page === 1 ? 'disabled page-item' : 'page-item' %> ">
+                                                    <a class="page-link" href="/products?page=<%= page - 1  %>"
+                                                        aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                    </a>
+                                                </li>
+                                                <% for(var i=1; i <=totalPages; i++) {%>
+                                                    <li class="page-item">
+                                                        <a class="<%= page === i ? 'active page-link' : 'page-link' %>"
+                                                            href="/products?page=<%= i  %>">
+                                                            <%= i %>
+                                                        </a>
+                                                    </li>
+                                                    <% } %>
+                                                        <li
+                                                            class="<%= page === totalPages ? 'disabled page-item' : 'page-item' %> ">
+                                                            <a class="page-link" href="/products?page=<%= page + 1  %>"
+                                                                aria-label="Next">
+                                                                <span aria-hidden="true">&raquo;</span>
+                                                            </a>
+                                                        </li>
+                                            </div>
+                                            <% } else { %>
+                                                <div>Không tồn tại sản phẩm</div>
+                                                <% } %>
 
                             </div>
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="<%= page === 1 ? " disabled page-item" : "page-item" %>">
-                                        <a class="page-link" href="/products?page=<%=page - 1%>" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                    </li>
-                                    <% for(let i=0; i < totalPages; i++) { %>
-                                        <li class="page-item">
-                                            <a class="<%= page === i + 1 ? " active page-link" : "page-link" %>"
-                                                href="/products?page=<%=i + 1%>">
-                                                    <%= i + 1 %>
-                                            </a>
-                                        </li>
-                                        <% } %>
-
-                                            <li class="<%= page === totalPages ? " disabled page-item" : "page-item" %>
-                                                ">
-                                                <a class="page-link
-                                                        href=" /products?page=<%=page + 1%>"
-                                                    aria-label="Next">
-                                                    <span aria-hidden="true">&raquo;</span>
-                                                    <span class="sr-only">Next</span>
-                                                </a>
-                                            </li>
-                                </ul>
-                            </nav>
                         </div>
                     </div>
                 </div>
